@@ -24,7 +24,7 @@ export default function Contact({ isActive }) {
     setAlert(null);
 
     try {
-      const res = await axios.post('/api/contact', form);
+     const res = await axios.post('https://portfolio-backend-fiv1.onrender.com/api/contact', form);
       if (res.data.success) {
         setAlert({ type: 'success', msg: res.data.message });
         setForm(initialForm);
