@@ -12,7 +12,7 @@ const initialForm = {
 export default function Contact({ isActive }) {
   const [form, setForm] = useState(initialForm);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState(null); // { type: 'success'|'error', msg: '' }
+  const [alert, setAlert] = useState(null);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,14 +24,20 @@ export default function Contact({ isActive }) {
     setAlert(null);
 
     try {
-     const res = await axios.post('https://portfolio-backend-fiv1.onrender.com/api/contact', form);
+      const res = await axios.post(
+        'https://portfolio-backend-fiv1.onrender.com/api/contact',
+        form,
+        { timeout: 60000 }
+      );
       if (res.data.success) {
         setAlert({ type: 'success', msg: res.data.message });
         setForm(initialForm);
       }
     } catch (err) {
       const msg =
-        err.response?.data?.message || 'Something went wrong. Please try again.';
+        err.code === 'ECONNABORTED'
+          ? 'Server is waking up, please try again in 30 seconds!'
+          : err.response?.data?.message || 'Something went wrong. Please try again.';
       setAlert({ type: 'error', msg });
     } finally {
       setLoading(false);
@@ -41,14 +47,12 @@ export default function Contact({ isActive }) {
   return (
     <section className={`contact ${isActive ? 'active' : ''}`}>
       <div className="contact-container">
-        {/* Info */}
         <div className="contact-box">
           <h2>Let&apos;s Work Together</h2>
           <p className="desc">
             Have a project in mind or just want to say hi? Feel free to reach out — I&apos;d love
             to hear from you!
           </p>
-
           <div className="contact-detail">
             <i className="bx bxs-phone" />
             <div className="detail">
@@ -56,7 +60,6 @@ export default function Contact({ isActive }) {
               <p>(+91) 9384494216</p>
             </div>
           </div>
-
           <div className="contact-detail">
             <i className="bx bxs-envelope" />
             <div className="detail">
@@ -64,23 +67,20 @@ export default function Contact({ isActive }) {
               <p>pradeepp54980@gmail.com</p>
             </div>
           </div>
-
           <div className="contact-detail">
             <i className="bx bx-map" />
             <div className="detail">
               <p>Address</p>
-              <p> India,Tamil Nadu,Tirupattur,Ambur,Mittalam Melur</p>
+              <p>India, Tamil Nadu, Tirupattur, Ambur, Mittalam Melur</p>
             </div>
           </div>
         </div>
 
-        {/* Form */}
         <div className="contact-box">
           <div className="contact-form">
             <h2 className="heading">
               Contact <span>Me!</span>
             </h2>
-
             <div className="field-box">
               <input
                 type="text"
@@ -122,15 +122,13 @@ export default function Contact({ isActive }) {
                 required
               />
             </div>
-
             <button
               className="btn"
               onClick={handleSubmit}
               disabled={loading}
             >
-              {loading ? 'Sending...' : 'Send Message'}
+              {loading ? 'Sending... (may take 30-50 sec on first try)' : 'Send Message'}
             </button>
-
             {alert && (
               <div className={`alert ${alert.type}`}>
                 {alert.type === 'success' ? '✅ ' : '❌ '}
