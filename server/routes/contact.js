@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Contact = require('../models/Contact');
-const Brevo = require('@getbrevo/brevo');
+const { TransactionalEmailsApi, SendSmtpEmail } = require('@getbrevo/brevo');
 
 const sendEmail = async ({ to, subject, html }) => {
-  const client = new Brevo.TransactionalEmailsApi();
-  client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
+ const client = new TransactionalEmailsApi();
+client.authentications['api-key'].apiKey = process.env.BREVO_API_KEY;
 
-  await client.sendTransacEmail({
+await client.sendTransacEmail({
     sender: { name: 'Pradeep Portfolio', email: 'pradeepp54980@gmail.com' },
     to: [{ email: to }],
     subject,
