@@ -16,7 +16,7 @@ const projects = [
      live: ' https://pradeep-2004-s.github.io/minproject/', github: 'https://github.com/Pradeep-2004-S/minproject.git', 
      img: '/img/bookskey_project.jpeg' },
 
-  { numb: '03', title: 'MERN Project', desc: 'Processing...', tech: 'MongoDB, Express, React, Node.js', live: '#', github: '#', img: '/img/orege.png' },
+  { numb: '03', title: 'MERN Project', desc: 'Processing...', tech: 'MongoDB, Express, React, Node.js', live: '#', github: '#', img: '/img/orage.png' },
   { numb: '04', title: 'UI Design', desc: 'Processing...', tech: 'Figma, CSS', live: '#', github: '#', img: '/img/purple.png' },
   { numb: '05', title: 'API Project', desc: 'Processing...', tech: 'Node.js, Express, MongoDB', live: '#', github: '#', img: '/img/purple.png' },
   { numb: '06', title: 'Mobile App UI', desc: 'Processing...', tech: 'React Native', live: '#', github: '#', img: '/img/purple.png' },
